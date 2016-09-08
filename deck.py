@@ -11,4 +11,3 @@ class Deck:
     hand.append(self.deck.pop())
     hand.append(self.deck.pop())
     return hand
-
