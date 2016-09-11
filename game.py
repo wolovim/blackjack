@@ -1,9 +1,6 @@
 from deck import Deck
 from hand import Hand
 
-values = { 'A': 11, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7,
-           '8': 8, '9': 9, '10': 10, 'J': 10, 'Q': 10, 'K': 10 }
-
 class Game:
   def __init__(self):
     self.chips = 100
@@ -73,11 +70,11 @@ class Game:
         continue
 
   def is_bust(self, hand):
-    return self.evaluate_hand(hand) > 21
+    return hand.get_value() > 21
 
   def evaluate_round(self, bet, player_hand, dealer_hand):
-    player_points = self.evaluate_hand(player_hand)
-    dealer_points = self.evaluate_hand(dealer_hand)
+    player_points = player_hand.get_value()
+    dealer_points = dealer_hand.get_value()
     print "Your total: {player}. Dealer's total: {dealer}".format(player=player_points,dealer=dealer_points)
     if player_points > dealer_points:
       print 'You win!'
@@ -87,12 +84,6 @@ class Game:
     else:
       print 'You lose!'
       self.lose_chips(bet)
-
-  def evaluate_hand(self, hand):
-    value = 0
-    for card in hand.cards:
-      value += values[card[1:]]
-    return value
 
   def win_chips(self, chips):
     self.chips += chips
