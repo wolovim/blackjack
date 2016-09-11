@@ -1,8 +1,6 @@
 from game import Game
 from deck import Deck
-
-suits = ['C', 'H', 'S', 'D']
-ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
+from hand import Hand
 
 def display_player_hand(hand):
   return "{card_1}, {card_2}".format(card_1=hand[0], card_2=hand[1])
@@ -14,28 +12,43 @@ print "Blackjack!"
 game = Game()
 
 while game.chips > 0:
-  deck = Deck(suits, ranks)
+  deck = Deck()
 
-  player_hand = deck.deal()
-  dealer_hand = deck.deal()
+  player_hand = Hand()
+  deck.deal(player_hand)
 
-  print "\nYou have {chips} chips.".format(chips=game.chips)
-  bet = int(raw_input("How many would you like to bet? "))
+  dealer_hand = Hand()
+  deck.deal(dealer_hand)
 
-  print "\nYour hand: {hand}".format(hand=display_player_hand(player_hand))
-  print "Dealer's hand: {hand}\n".format(hand=display_dealer_hand(dealer_hand))
+  # Get player bet
+  while True:
+    try:
+      print "\nYou have {chips} chips.".format(chips=game.chips)
+      bet = int(raw_input("How many would you like to bet? "))
+      if bet > game.chips:
+        print "You can't bet more than you have!"
+        continue
+      else:
+        break
+    except:
+      print "\nPlease enter a number of chips!"
 
+  # Show the field
+  print "\nYour hand: {hand}".format(hand=display_player_hand(player_hand.cards))
+  print "Dealer's hand: {hand}\n".format(hand=display_dealer_hand(dealer_hand.cards))
+
+  # Prompt user user action: hit or stay
   while True:
     input = raw_input('Want to (h)it or (s)tay? ')
 
     if input == 'h':
       print 'hitting!'
+      deck.hit(player_hand)
     elif input == 's':
-      outcome = game.evaluate_round(player_hand, dealer_hand)
-      print outcome
-      game.win_chips(bet) if outcome == 'win!' else game.lose_chips(bet)
+      game.evaluate_round(bet, player_hand.cards, dealer_hand.cards)
       break
     else:
+      print "\nGotta enter 'h' or 's'!"
       continue
 
 else:
