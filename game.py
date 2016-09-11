@@ -5,6 +5,12 @@ class Game:
   def __init__(self):
     self.chips = 100
 
+  def play(self):
+    pass
+
+  def is_live(self):
+    return self.chips > 0
+
   def evaluate_hand(self, hand):
     value = 0
     for card in hand:

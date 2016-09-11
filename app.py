@@ -8,19 +8,7 @@ def display_player_hand(hand):
 def display_dealer_hand(hand):
   return "{card_1}, HIDDEN".format(card_1=hand[0])
 
-print "Blackjack!"
-game = Game()
-
-while game.chips > 0:
-  deck = Deck()
-
-  player_hand = Hand()
-  deck.deal(player_hand)
-
-  dealer_hand = Hand()
-  deck.deal(dealer_hand)
-
-  # Get player bet
+def get_player_bet():
   while True:
     try:
       print "\nYou have {chips} chips.".format(chips=game.chips)
@@ -28,10 +16,30 @@ while game.chips > 0:
       if bet > game.chips:
         print "You can't bet more than you have!"
         continue
+      elif bet < 1:
+        print "Bet must be at least 1!"
       else:
-        break
+        return bet
     except:
       print "\nPlease enter a number of chips!"
+
+print "\nA crappy blackjack game appears!"
+game = Game()
+
+while game.is_live():
+  # For each round, use a fresh deck
+  deck = Deck()
+
+  # Deal for the player
+  player_hand = Hand()
+  deck.deal(player_hand)
+
+  # Deal for the dealer
+  dealer_hand = Hand()
+  deck.deal(dealer_hand)
+
+  # Get player bet
+  bet = get_player_bet()
 
   # Show the field
   print "\nYour hand: {hand}".format(hand=display_player_hand(player_hand.cards))
