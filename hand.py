@@ -17,13 +17,12 @@ class Hand:
     print "Current hand: {cards}\n".format(cards=self.cards)
 
   def get_value(self):
-    card_values = map(lambda x: values[x[1:]], self.cards)
+    card_values = map(lambda card: values[card[1:]], self.cards)
     value = reduce(lambda x,y: x+y, card_values)
     if self.ace and value < 12:
       value += 10
     return value
 
   def check_for_ace(self):
-    for card in self.cards:
-      if card[1:] == 'A':
-        self.ace = True
+    if any(map(lambda card: card[1:] == 'A', self.cards)):
+      self.ace = True
