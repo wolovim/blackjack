@@ -7,12 +7,4 @@ class Deck:
   def __init__(self):
     deck = [suit + rank for suit in suits for rank in ranks]
     shuffle(deck)
-    self.deck = deck
-
-  def deal(self, hand):
-    hand.cards.append(self.deck.pop())
-    hand.cards.append(self.deck.pop())
-
-  def hit(self, hand):
-    hand.cards.append(self.deck.pop())
-    print "Current hand: {cards}\n".format(cards=hand.cards)
+    self.cards = deck

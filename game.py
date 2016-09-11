@@ -22,7 +22,7 @@ class Game:
 
   def deal_hand(self, deck):
     hand = Hand()
-    deck.deal(hand)
+    hand.deal(deck)
     return hand
 
   def display_hands(self, player_hand, dealer_hand):
@@ -57,7 +57,7 @@ class Game:
 
       if input == 'h':
         print 'Hitting!'
-        deck.hit(player_hand)
+        player_hand.hit(deck)
         if self.is_bust(player_hand):
           print 'Bust!'
           self.lose_chips(bet)
