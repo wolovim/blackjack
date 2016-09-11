@@ -17,9 +17,8 @@ class Hand:
     print "Current hand: {cards}\n".format(cards=self.cards)
 
   def get_value(self):
-    value = 0
-    for card in self.cards:
-      value += values[card[1:]]
+    card_values = map(lambda x: values[x[1:]], self.cards)
+    value = reduce(lambda x,y: x+y, card_values)
     if self.ace and value < 12:
       value += 10
     return value
